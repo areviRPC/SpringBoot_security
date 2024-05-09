@@ -1,0 +1,64 @@
+
+             jueves 9 de mayo 2024
+
+
+
+1. 
+
+instalar dependencias 
+
+2. 
+
+>_06_beauty_salon_API/src/main/java/com/riwi/beautySalon/api/controllers/AuthController.java
+
+creamos el controlador de bloqueos
+
+2.1 ----
+
+2.2 ---
+
+> POSTMAN
+
+creamos la carpeta con las peticiones para poder verificar que 
+funcione, con la caracteristica POST veremos que debe aparecer
+un 401 en la salida de datos 
+
+3. ?
+
+4.
+
+>_06_beauty_salon_API/src/main/java/com/riwi/beautySalon/config/SegurityConfig.java
+
+creamos el archivo que determinara los filtros 
+
+4.1
+
+etiqueta @Bean para que lo define como frijol
+
+con el http.csrf para disabilitar la proteccion csrf
+
+con .authorizeHttpRequests y .requestMatchers para determinar que paginas estaran seguras eso implica que todas las rutas con
+"/auth" estaran seguras 
+
+4.2
+
+tambien es posible configurar la seguridad creando un array 
+estatico en el cual agregamos todas las rutas a las que le vamos a dar autorizacion
+
+4.1 
+
+asi mismo si el link no coincide con nuestro match debemos
+dar la orden de aitenticarlo con .anyRequest().authenticated()
+
+4.3 
+
+agregamos throws Exception que funciona como try catch para 
+cuando la ruta no este autorizada 
+
+> POSTMAN
+
+al probar otras rutas que no estan incluidas en nuestro array 
+estas nos daran un error 403
+
+al probar la ruta de login que si esta incluida este arrojara 
+un caracter 200
