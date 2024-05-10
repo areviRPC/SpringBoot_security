@@ -1,5 +1,5 @@
 
-             jueves 9 de mayo 2024
+                            jueves 9 de mayo 2024
 
 
 
@@ -37,13 +37,15 @@ etiqueta @Bean para que lo define como frijol
 
 con el http.csrf para disabilitar la proteccion csrf
 
-con .authorizeHttpRequests y .requestMatchers para determinar que paginas estaran seguras eso implica que todas las rutas con
+con .authorizeHttpRequests y .requestMatchers para determinar que
+paginas estaran seguras eso implica que todas las rutas con
 "/auth" estaran seguras 
 
 4.2
 
 tambien es posible configurar la seguridad creando un array 
-estatico en el cual agregamos todas las rutas a las que le vamos a dar autorizacion
+estatico en el cual agregamos todas las rutas a las que le vamos a dar 
+autorizacion
 
 4.1 
 
@@ -62,3 +64,121 @@ estas nos daran un error 403
 
 al probar la ruta de login que si esta incluida este arrojara 
 un caracter 200
+
+
+
+                            jueves 9 de mayo 2024
+
+5. 
+
+>_06_beauty_salon_API_seguridad/src/main/java/com/riwi/
+beautySalon/api/dto/request/LoginReq.java
+
+Creamos el request del log ing para ingresar los atributos que seran obligatorios
+para el usuario a la hora de crear al usuario 
+
+CREAMOS OTRO REQUEST CON REGISTER       
+
+Usamos las etiquetas @NotBlank y @Size para hacer validaciones 
+
+6.
+
+> _06_beauty_salon_API_seguridad/src/main/java/com/riwi/beautySalon/
+domain/entities/User.java
+
+Creamos la entidad User en donde definiremos su atributos junto co un role 
+que detemrinara el tipo de usuario que es
+
+6.1
+
+> _06_beauty_salon_API_seguridad/src/main/java/com/riwi/beautySalon/
+utils/enums/Role.java
+
+Creamos el enumerador de Role con las caracteristicas que queramos 
+
+> _06_beauty_salon_API_seguridad/src/main/java/com/riwi/beautySalon/
+domain/entities/User.java
+
+adicionalmente hay que agregar @Enumerated para definir el enumarado como 
+string
+
+7.
+
+En el mismo archivo de User modifcamos para que implemente UserDetails y
+con el bombillo implementamos todos los metodos que se imprimen desde springboot
+
+7.4 
+
+autoridad .....
+
+8.
+
+> _06_beauty_salon_API_seguridad/src/main/java/com/riwi/beautySalon/
+domain/repositories/UseRepository.java
+
+Creamos el repositorio de 
+
+8.1 
+
+9. 
+
+> _06_beauty_salon_API_seguridad/src/main/java/com/riwi/beautySalon/
+api/dto/response/AuthResp.java
+
+Creamos el repsnse de Auth
+
+
+> _06_beauty_salon_API_seguridad/src/main/java/com/riwi/beautySalon/
+infraestructure/abstract_service/IAuthService.java
+
+I servicio
+
+10. 
+
+creamos el servicio de auth
+
+implementamos todos los metodos implementando IAuthService 
+
+invocamos el repositorio de user 
+
+
+10.1
+el metodo "USER" para buscar user para saber si existe 
+
+10.2
+
+Metodo para registrar 
+
+valida si el ususario existe y de lo contrario lo crea como nuevo 
+
+
+11.
+
+> _06_beauty_salon_API_seguridad/src/main/java/com/riwi/beautySalon/
+infraestructure/helpers/JwtService.java
+
+creamos la entidad que se va a encargar de la seguridad con JwtService 
+con la etiqueta @Component: Este funciona como una funcion mas alta que 
+@Service 
+
+convertimos una clave cualquiera con un conversor de googlea base 64 para
+que pueda ser leida por Jwt y la pegamos en nuestra defincion de secret_key
+
+11.1 
+
+creamos la funcion que encripte la  clave con Keys.hmacShaKeyFor(KeyBytes);
+construyendo su estructura dentro 
+
+
+11.2
+
+Al final agregamos la construccion de "signWhith" que llama a la clave que
+ya encriptamos para firmar la encriptacion por el servidor 
+
+11.3 
+
+generamos una nueva funcion donde vamos a mapear los datos del usuario y
+retornamos su token con la funcion creada anteiormente 
+
+12.
+
